@@ -1,9 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"github.com/brsgr/chip8-go/chip8"
 	"log"
+	"time"
+)
+
+var (
+	ClockSpeed = time.Duration(60) // default 60hz
 )
 
 func main() {
@@ -11,7 +15,6 @@ func main() {
 	if err != nil {
 		log.Fatalln("failed to init CPU")
 	}
-	fmt.Println(chip)
 
 	chip.Run()
 }

@@ -41,14 +41,14 @@ type CPU struct {
 	// stop channel stops the program
 	Stop chan bool
 
-	// clock
+	// clock pulls from a `tick` channel
 	Clock <-chan time.Time
 }
 
 func NewCPU(ClockSpeed time.Duration) (*CPU, error) {
 
 	c := &CPU{
-		Clock: time.Tick(time.Second / ClockSpeed),
+		Clock: time.NewTicker(time.Second / ClockSpeed).C,
 		Stop:  make(chan bool),
 	}
 
@@ -61,8 +61,8 @@ func (c *CPU) Run() error {
 		case <-c.Stop:
 			log.Println("stopping emulator")
 		case e := <-c.Clock:
-			log.Println("tick")
 			log.Println(e)
+			// run our cool stuff here
 		}
 	}
 }
